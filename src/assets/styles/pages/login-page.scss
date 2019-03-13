@@ -1,0 +1,190 @@
+
+.login-page {
+  display: flex;
+
+
+  .welcome-section {
+    display: none;
+    @media (min-width: 769px){
+      display: unset;
+      @include relative-width(856px);
+      background-image: url($bg-img);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 100%;
+      .opacity-layer {
+        background-color: rgba(42, 46, 67, 0.91);
+        z-index: 1;
+        @include square(100%);
+      }
+      .quote {
+        font-size: 2.2rem;
+        font-weight: 100;
+        line-height: 1.48;
+        color: #ffffff;
+        position: absolute;
+        bottom: 202px;
+        left: 120px;
+        width: 300px;
+
+        @media (min-width: 1150px) {
+          width: 400px;
+          font-size: 2.8rem;
+        }
+        @media (min-width: 1150px) {
+          width: 582px;
+          font-size: 4.2rem;
+        }
+      }
+      img {
+        position: absolute;
+        left: 120px;
+        bottom: 97.2px;
+        width: 172px;
+      }
+    }
+  }
+
+
+
+
+
+  .login-section {
+    @media (min-width: 769px) {
+      @include relative-width(584px);
+      padding-top: 117px / 960px * 100vh;
+    }
+    width: 100%;
+    background-color: #fff;
+    height: 100%;
+    @extend %flex-column;
+    align-items: start;
+    //width: 584 - 88 - 134 = 362;
+    padding-left: 88px / 1440px * 100vw;
+    padding-right: 134px / 1440px * 100vw;
+    padding-top: 40px / 960px * 100vh;
+    .main-img {
+      @include relative-margin-bottom(40px);
+      height: 48px;
+      @media (min-width: 769px) {
+        height: 64px;
+      }
+    }
+    h2 {
+      font-weight: bold;
+      color: #2a2e43;
+      font-size: 2.4rem;
+      margin-bottom: 6px;
+      @media (min-width: 769px) {
+        font-size: 3.4rem;
+        @include relative-margin-bottom(40px);
+      }
+    }
+    p {
+      @include relative-margin-bottom(26px);
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.43;
+      text-align: left;
+      color: #78849e;
+      @media (min-width: 769px) {
+        @include relative-margin-bottom(40px);
+      }
+
+      &.sign-in-paragraph {
+        display: none;
+        @media (min-width: 769px) {
+          display: unset;
+        }
+      }
+      &.login-directions {
+        display: unset;
+        @media (min-width: 769px) {
+          display: none;
+        }
+      }
+    }
+    .learn-more-link {
+      @include relative-margin-bottom(40px);
+      font-family: HindSiliguri;
+      font-size: 1.4rem;
+      line-height: 1.43;
+      text-align: left;
+      color: #3499ff;
+      display: none;
+      @media (min-width: 769px) {
+        display: unset;
+      }
+    }
+    form {
+      @include relative-margin-bottom(16px);
+      width: 100%;
+      .input-wrapper {
+        input {
+          width: 100%;
+          border: none;
+          border-bottom: 1px solid #78849e;
+          font-size: 1.8rem;
+          @include relative-height(48px);
+          transition: .3s;
+          &:focus {
+            border-bottom: 1px solid #00cfee;
+            outline: none;
+          }
+          &::placeholder {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            color: #78849e;
+          }
+        }
+        &.second {
+          position: relative;
+          @include relative-margin-bottom(24px);
+          @media (min-width: 769px) {
+            @include relative-margin-bottom(31px);
+          }
+          img {
+            position: absolute;
+            left: calc((335 / 360 * 100%) - 5px);
+            top: 17px;
+          }
+        }
+      }
+      .btns-wrapper {
+        flex-direction: column-reverse;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @media (min-width: 769px) {
+          flex-direction: row;
+        }
+        a {
+          font-size: 1.4rem;
+          line-height: 1.43;
+          text-align: left;
+          color: #78849e;
+          font-family: HindSiliguri;
+          text-decoration: underline;
+        }
+        button {
+          width: 184px / 362px * 100%;
+          @include relative-height(48px);
+          @include relative-margin-bottom(13px);
+          @media (min-width: 769px) {
+            margin-bottom: 0;
+          }
+          border-radius: 999px;
+          background-image: linear-gradient(to left, #098bff, #00b2ff 48%, #00cfee);
+          font-size: 1.4rem;
+          font-weight: bold;
+          line-height: 1.5;
+          letter-spacing: 1.3px;
+          text-align: center;
+          color: #ffffff;
+          border: none;
+        }
+      }
+    }
+  }
+}
