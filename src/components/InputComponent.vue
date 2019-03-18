@@ -5,9 +5,9 @@
         <input :type="type" :placeholder="placeholder" :value="value" ref="input" @input="updateValue"/>
         <span v-if="msg" class="msg-label caps">{{msg}}</span>
 
-        <span v-if="rightIcon.isText" class="input-right-symbol">{{rightIcon.name}}</span>
+        <span v-if="rightIcon && rightIcon.isText" class="input-right-symbol">{{rightIcon.name}}</span>
         <i
-                v-if="!rightIcon.isText"
+                v-if="rightIcon && !rightIcon.isText"
                 :class="'icon-' + rightIcon.name"
         ></i>
     </div>

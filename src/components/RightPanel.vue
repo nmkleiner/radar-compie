@@ -22,6 +22,7 @@
                     placeholder="Type or select filter"
                     :rightIcon="{name: 'x', isText: true}"
                     left-icon="filter"
+                    v-model="filter"
             />
             <ul>
                 <RightPanelListItem
@@ -40,23 +41,30 @@
 <script>
     import InputComponent from './InputComponent'
     import RightPanelListItem from './RightPanelListItem'
-export default {
-    components: {
-        InputComponent,
-        RightPanelListItem
-    },
-    methods: {
-        closePanel() {
-            this.$store.dispatch('rightPanel/togglePanel')
+
+    export default {
+        components: {
+            InputComponent,
+            RightPanelListItem
+        },
+        methods: {
+            closePanel() {
+                this.$store.dispatch('rightPanel/togglePanel')
+            }
+        },
+        data() {
+            return {
+                filter: ''
+            }
+        },
+        computed: {
+            targets: _this => _this.$store.getters['rightPanel/targets/items']
+                .filter(item => item.heading.toLowerCase().includes(_this.filter.toLowerCase()))
+        },
+        created() {
+            this.$store.dispatch('rightPanel/getItems')
         }
-    },
-    computed: {
-        targets: _this => _this.$store.getters['rightPanel/targets/items']
-    },
-    created() {
-        this.$store.dispatch('rightPanel/getItems')
     }
-}
 </script>
 <style lang="scss" scoped>
 

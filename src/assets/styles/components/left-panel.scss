@@ -6,6 +6,15 @@
   width: 375px;
   align-self: flex-end;
   margin-bottom: 10px;
+  &::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 88px / 960px * 100vh;
+    border-radius: 0 0 10px 10px;
+    background-image: linear-gradient(to bottom, rgba(42, 46, 67, 0), #2a2e43);
+  }
   header {
     @extend %flex-column-centered;
     width: 100%;
@@ -34,9 +43,10 @@
     height: 655px / 960px * 100vh;
     background-color: $x-dark-blue-bg;
     border-radius: 0 0 10px 10px;
-    overflow-y: hidden;
     overflow-x: hidden;
     position: relative;
+    overflow-y: scroll;
+
     ul {
       @extend %flex-column-centered;;
 
@@ -117,14 +127,6 @@
           }
         }
       }
-    }
-    .opacity-layer {
-      width: 100%;
-      height: 88px / 960px * 100vh;
-      position: absolute;
-      bottom: 0;
-      border-radius: 0 0 10px 10px;
-      background-image: linear-gradient(to bottom, rgba(42, 46, 67, 0), #2a2e43);
     }
   }
   &.places {

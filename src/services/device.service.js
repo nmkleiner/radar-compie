@@ -1,11 +1,11 @@
-const axios = require('axios');
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000/';
+import ApiService from './apiService'
+const apiService = new ApiService()
 
 export default {
     getDevices
 }
 
 async function getDevices() {
-    const devices = await axios.get(`${BASE_URL}devices`)
+    const devices = await apiService.axios().get(`${apiService.getUrl()}devices`)
     return devices.data
 }

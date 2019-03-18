@@ -9,6 +9,7 @@
                     placeholder="Type or select filter"
                     :rightIcon="{name: 'x', isText: true}"
                     left-icon="filter"
+                    v-model="filter"
             />
             <span>22 {{theme | capitalize}}</span>
         </header>
@@ -45,7 +46,6 @@
                         :theme="theme"
                 />
             </ul>
-            <div class="opacity-layer"></div>
         </main>
 
         <NotFound v-else :theme="theme"/>
@@ -65,7 +65,13 @@
         },
         computed: {
             theme: _this => _this.$store.getters['leftPanel/theme'],
-            items: _this => _this.$store.getters['leftPanel/items'],
+            items: _this => _this.$store.getters['leftPanel/items']
+                .filter(item => item.heading.toLowerCase().includes(_this.filter.toLowerCase())),
+        },
+        data() {
+            return {
+                filter: ''
+            }
         },
         filters: {
             capitalize: function (value) {
