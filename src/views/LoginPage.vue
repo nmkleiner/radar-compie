@@ -12,7 +12,8 @@
             <img class="main-img" src="../../public/images/big-lock.svg"/>
             <h2>Welcome Back!</h2>
             <p class="sign-in-paragraph">
-                Sign in to manage your fleet and Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Sign in to manage your fleet and Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua.
             </p>
             <p class="login-directions">
                 Enter Your Login info
@@ -49,34 +50,38 @@
 <script>
     import InputComponent from '../components/InputComponent'
     import ButtonComponent from '../components/ButtonComponent'
-export default {
-    components: {
-        InputComponent,
-        ButtonComponent
-    },
-    data() {
-        return {
-            loginData: {
-                email: '',
-                password: ''
-            },
-            emailError: '',
-            passwordError: '',
-        }
-    },
-    methods: {
-        async login() {
-            this.emailError = ''
-            this.passwordError = ''
-            const user = await this.$store.dispatch({type: 'users/login', loginData: this.loginData})
-            if (user.email) {
-                this.$router.push('/')
+    import {mapActions} from 'vuex'
+
+    export default {
+        components: {
+            InputComponent,
+            ButtonComponent
+        },
+        data() {
+            return {
+                loginData: {
+                    email: '',
+                    password: ''
+                },
+                emailError: '',
+                passwordError: '',
             }
-            else {
-                if (user.emailError) this.emailError = user.emailError;
-                else this.passwordError = user.passwordError;
+        },
+        methods: {
+            ...mapActions({
+                sendLogin: 'users/login'
+            }),
+            async login() {
+                this.emailError = ''
+                this.passwordError = ''
+                const user = await this.sendLogin({loginData: this.loginData})
+                if (user.email) {
+                    this.$router.push('/')
+                } else {
+                    if (user.emailError) this.emailError = user.emailError;
+                    else this.passwordError = user.passwordError;
+                }
             }
-        }
-    },
-}
+        },
+    }
 </script>

@@ -5,11 +5,12 @@ import devices from "./devices";
 export default {
     namespaced: true,
     state: {
-        theme: 'places'
+        theme: 'places',
+        filter: ''
     },
     getters: {
-        items: (state) => state[state.theme].items,
-        theme: (state) => state.theme,
+        items: (state) => state[state.theme].items
+            .filter(item => item.heading.toLowerCase().includes(state.filter)),
     },
     actions: {
         setTheme({commit}, {theme}) {
@@ -19,11 +20,17 @@ export default {
             dispatch('places/getItems')
             dispatch('areas/getItems')
             dispatch('devices/getItems')
+        },
+        filter({commit}, {filter}) {
+            commit({type: 'setFilter', filter})
         }
     },
     mutations: {
         setTheme(state, {theme}) {
             state.theme = theme
+        },
+        setFilter(state, {filter}) {
+            state.filter = filter
         }
     },
     modules: {

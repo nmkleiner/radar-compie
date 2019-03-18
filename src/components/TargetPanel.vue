@@ -22,7 +22,9 @@
                     placeholder="Type or select filter"
                     :rightIcon="{name: 'x', isText: true}"
                     left-icon="filter"
-                    v-model="filter"
+                    v-model="filterBy"
+                    @input="filter({filter: filterBy})"
+
             />
             <ul>
                 <RightPanelListItem
@@ -41,6 +43,7 @@
 <script>
     import InputComponent from './InputComponent'
     import RightPanelListItem from './RightPanelListItem'
+    import {mapActions, mapGetters} from 'vuex'
 
     export default {
         components: {
@@ -48,22 +51,24 @@
             RightPanelListItem
         },
         methods: {
-            closePanel() {
-                this.$store.dispatch('rightPanel/togglePanel')
-            }
+            ...mapActions({
+                filter: 'targetPanel/targets/filter',
+                fetchItems: 'targetPanel/getItems',
+                closePanel: 'targetPanel/togglePanel'
+            }),
         },
         data() {
             return {
-                filter: ''
+                filterBy: ''
             }
         },
         computed: {
-            targets: _this => _this.$store.getters['rightPanel/targets/items']
-                .filter(item => item.heading.toLowerCase().includes(_this.filter.toLowerCase()))
-                .sort((item1,item2)=> item2.active - item1.active)
+            ...mapGetters({
+                targets: 'targetPanel/targets/items'
+            })
         },
         created() {
-            this.$store.dispatch('rightPanel/getItems')
+            this.fetchItems()
         }
     }
 </script>

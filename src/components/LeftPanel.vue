@@ -2,88 +2,85 @@
     <div :class="theme" class="left-panel">
 
         <header>
-            <h2>{{theme | capitalize}}</h2>
+            <h2 class="caps">{{theme}}</h2>
             <InputComponent
                     shape="padded"
                     type="text"
                     placeholder="Type or select filter"
                     :rightIcon="{name: 'x', isText: true}"
                     left-icon="filter"
-                    v-model="filter"
+                    v-model="filterBy"
+                    @input="filter({filter: filterBy})"
             />
-            <span>22 {{theme | capitalize}}</span>
+            <span class="caps">22 {{theme}}</span>
         </header>
 
         <main v-if="items && items.length">
-            <ul v-if="theme === 'places'">
-                <LeftPanelListItem
+            <ul>
+                <component
                         v-for="(item,i) in items"
+                        :is="themeItem"
                         :decoration="i === 0 && '★'"
                         :favorite="i === 0"
                         :item="item"
                         :key="i"
                         :idx="i"
-                        :theme="theme"
-                />
-            </ul>
-
-            <ul v-if="theme === 'areas'">
-                <LeftPanelListItem
-                        v-for="(item,i) in items"
-                        :item="item"
-                        :key="i"
-                        :theme="theme"
-                />
-            </ul>
-
-            <ul v-if="theme === 'devices'">
-                <LeftPanelListItem
-                        v-for="(item,i) in items"
-                        :item="item"
-                        size="medium"
-                        :key="i"
-                        :idx="i"
-                        :theme="theme"
                 />
             </ul>
         </main>
-
         <NotFound v-else :theme="theme"/>
     </div>
 </template>
 <script>
-
-    import LeftPanelListItem from './LeftPanelListItem'
     import NotFound from './NotFound'
     import InputComponent from './InputComponent'
+    import PlaceItem from './PlaceItem'
+    import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
+    import AreaItem from "./AreaItem";
+    import DeviceItem from "./DeviceItem";
 
     export default {
         components: {
-            LeftPanelListItem,
+            DeviceItem,
+            AreaItem,
             NotFound,
-            InputComponent
+            InputComponent,
+            PlaceItem
         },
         computed: {
-            theme: _this => _this.$store.getters['leftPanel/theme'],
-            items: _this => _this.$store.getters['leftPanel/items']
-                .filter(item => item.heading.toLowerCase().includes(_this.filter.toLowerCase())),
+            ...mapState({
+                theme: (state) => state.leftPanel.theme
+            }),
+            ...mapGetters({
+                items: 'leftPanel/items',
+            }),
+            themeItem() {
+                if (this.theme === 'places') {
+                    return 'PlaceItem'
+                } else if (this.theme === 'devices') {
+                    return 'DeviceItem'
+                } else {
+                    return 'AreaItem'
+                }
+            }
         },
         data() {
             return {
-                filter: ''
+                filterBy: ''
             }
         },
-        filters: {
-            capitalize: function (value) {
-                if (!value) {
-                    return ''
-                }
-                value = value.toString()
-                return value.charAt(0).toUpperCase() + value.slice(1)
-            }
+        methods: {
+            ...mapMutations({
+                close: 'leftPanel/close'
+            }),
+            ...mapActions({
+                fetchData: 'leftPanel/getItems',
+                filter: 'leftPanel/filter'
+            }),
+
         },
         created() {
-            this.$store.dispatch('leftPanel/getItems')
+            this.fetchData();
         }
     }
 </script>

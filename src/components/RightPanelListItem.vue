@@ -15,24 +15,26 @@
     </li>
 </template>
 <script>
-export default {
-    props: {
-        active: Boolean,
-        color: String,
-        serialNum: String,
-        heading: String,
-        location: String
-    },
-    data() {
-        return {
-
+    export default {
+        props: {
+            active: Boolean,
+            color: String,
+            serialNum: String,
+            heading: String,
+            location: String
+        },
+        data() {
+            return {}
+        },
+        computed: {
+            activeText() {
+                return this.active ? 'ACTIVE' : 'Inactive'
+            },
+            activeStyle() {
+                return {color: !this.active && '#78849e'}
+            }
         }
-    },
-    computed: {
-        activeText: _this => _this.active? 'ACTIVE' : 'Inactive',
-        activeStyle: _this => ({color: !_this.active && '#78849e'})
     }
-}
 </script>
 <style lang="scss" scoped>
 

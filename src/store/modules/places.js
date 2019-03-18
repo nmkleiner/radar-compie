@@ -1,6 +1,4 @@
 import placeService from '../../services/place.service'
-import apiService from '../../services/apiService'
-const api = new apiService()
 
 export default {
     namespaced: true,
@@ -12,7 +10,6 @@ export default {
     },
     actions: {
         async getItems({commit}) {
-            console.log('babababa',api.getUrl())
             const places = await placeService.getPlaces()
             commit({type: 'setPlaces', places})
         }

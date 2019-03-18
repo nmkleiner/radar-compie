@@ -5,16 +5,13 @@ export default {
     state: {
         isOpen: false
     },
-    getters: {
-        isOpen: state => state.isOpen,
-    },
     actions: {
         togglePanel({commit}) {
             commit({type: 'togglePanel'})
         },
         getItems({dispatch}) {
             dispatch('targets/getItems')
-        }
+        },
     },
     mutations: {
         togglePanel(state) {

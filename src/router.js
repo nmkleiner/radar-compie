@@ -16,7 +16,6 @@ export default new Router({
             name: 'radar-page',
             component: radarPage,
             beforeEnter: async (to, from, next) => {
-                console.log('from', from, 'to', to)
                 const isLoggedIn = await userService.isLoggedIn()
                 if (isLoggedIn) {
                     next()

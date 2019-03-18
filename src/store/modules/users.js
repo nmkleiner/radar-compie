@@ -5,11 +5,8 @@ export default {
     state: {
         loggedInUser: {}
     },
-    getters: {
-        loggedInUser: (state) => state.loggedInUser
-    },
     actions: {
-        async login({commit},{loginData}) {
+        async login({commit}, {loginData}) {
             const user = await userService.login(loginData)
             if (user) {
                 commit({type: 'setLoggedIUser', user})

@@ -7,8 +7,6 @@
                 :decoration="decoration"
                 :size="size"
                 :color="color"
-                :notification="item.notification"
-                :isTooltipOpen="item.isTooltipOpen"
                 shape="circle"
         />
         <div class="text-wrapper">
@@ -18,13 +16,16 @@
         </div>
     </li>
 </template>
+
 <script>
     import ButtonComponent from './ButtonComponent'
+
     export default {
         components: {
             ButtonComponent,
         },
         props: {
+            decoration: null,
             favorite: Boolean,
             item: Object,
             idx: Number,
@@ -32,17 +33,18 @@
                 type: String,
                 default: 'small'
             },
-            decoration: null,
-            theme: String
         },
         computed: {
-            color: _this => _this.favorite? 'dark-blue' : 'dark-gray',
+            color() {
+                return this.favorite ? 'dark-blue' : 'dark-gray'
+            },
             icon() {
-                if (this.theme === 'places') {
-                    return this.favorite? 'places' : 'places_g'
-                }
-                return 'icon'
+                return this.favorite ? 'places' : 'places_g'
             }
         },
     }
 </script>
+
+<style scoped>
+
+</style>

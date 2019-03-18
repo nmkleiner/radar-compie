@@ -3,7 +3,7 @@
         <div class="top-left-buttons-wrapper">
             <ButtonComponent
                     v-for="(btn,i) in topButtons"
-                    @click.native="setLeftPanelTheme(btn.name)"
+                    @click.native="setLeftPanelTheme({theme: btn.name})"
                     color="dark-blue"
                     size="small"
                     shape="circle"
@@ -20,12 +20,12 @@
                 :notification="true"
                 @click.native="toggleRightPanel"
         />
-        <LeftPanel />
-        <RightPanel @closePanel="toggleRightPanel" v-if="isRightPanelOpen" />
+        <LeftPanel/>
+        <RightPanel @closePanel="toggleRightPanel" v-if="isRightPanelOpen"/>
         <div class="bottom-right-btns-wrapper">
-            <ButtonComponent shape="circle" color="white" size="small" icon="Union" />
+            <ButtonComponent shape="circle" color="white" size="small" icon="Union"/>
 
-            <SlotButton />
+            <SlotButton/>
         </div>
         <ButtonComponent
                 class="bottom-left-btn"
@@ -39,11 +39,12 @@
 </template>
 
 <script>
+    import {mapActions, mapState} from 'vuex'
     import ButtonComponent from '../components/ButtonComponent'
     import SlotButton from '../components/SlotButton'
     import Scale from '../components/Scale'
     import LeftPanel from '../components/LeftPanel'
-    import RightPanel from '../components/RightPanel'
+    import RightPanel from '../components/TargetPanel'
 
     export default {
         name: 'home',
@@ -55,13 +56,10 @@
             RightPanel
         },
         methods: {
-            setLeftPanelTheme(theme) {
-                this.$store
-                    .dispatch({type: 'leftPanel/setTheme', theme})
-            },
-            toggleRightPanel() {
-                this.$store.dispatch('rightPanel/togglePanel')
-            }
+            ...mapActions({
+                setLeftPanelTheme: 'leftPanel/setTheme',
+                toggleRightPanel: 'targetPanel/togglePanel'
+            })
         },
         data() {
             return {
@@ -74,7 +72,9 @@
             }
         },
         computed: {
-            isRightPanelOpen: _this => _this.$store.getters['rightPanel/isOpen']
+            ...mapState({
+                isRightPanelOpen: (state) => state.targetPanel.isOpen
+            })
         }
     }
 </script>

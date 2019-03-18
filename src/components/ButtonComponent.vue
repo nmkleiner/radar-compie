@@ -1,6 +1,6 @@
 <template>
     <button :class="buttonClass" @mouseenter="toggleTooltip" @mouseleave="toggleTooltip">
-        <img v-if="img" :src="`images/icons/${img}.${imgFormat}`"/>
+        <img v-if="img" :src="`images/icons/${img}.${imgFormat}`" alt="icon"/>
         <i v-else-if="icon" class="icon" :class="'icon-' + icon"></i>
         <div v-if="notification" class="notification"></div>
         <div v-if="notification === 'ok'" class="notification bottom right ok"></div>
@@ -10,13 +10,9 @@
                 class="notification bottom right error-notification"
                 :class="imageClass"
                 :src="`images/icons/${notification}.svg`"
+                alt="notification"
         />
-        <!--<i-->
-                <!--v-if="notification === 'error' || notification === 'warning'"-->
-                <!--:class="'icon-' + notification"-->
-        <!--&gt;</i>-->
         <Tooltip v-if="isTooltipOpen" :notification="notification"/>
-
         <div v-if="!!decoration">{{decoration}}</div>
         {{text}}
 
@@ -49,7 +45,6 @@
         data() {
             return {
                 isTooltipOpen: false,
-                // icon: ['burger','areas','filter']
             }
         },
         methods: {
@@ -69,24 +64,24 @@
             }
         },
         computed: {
-            buttonClass: _this => ({
-                'dark-blue': _this.color === 'dark-blue',
-                'dark-gray': _this.color === 'dark-gray',
-                'white': _this.color === 'white',
-                small: _this.size === 'small',
-                medium: _this.size === 'medium',
-                circle: _this.shape === 'circle',
-                'round-left': _this.shape === 'round-left',
-                'contained': _this.shape === 'contained'
-            }),
-            imageClass: function() {
-                const obj = {
+            buttonClass() {
+                return {
+                    'dark-blue': this.color === 'dark-blue',
+                    'dark-gray': this.color === 'dark-gray',
+                    'white': this.color === 'white',
+                    small: this.size === 'small',
+                    medium: this.size === 'medium',
+                    circle: this.shape === 'circle',
+                    'round-left': this.shape === 'round-left',
+                    'contained': this.shape === 'contained'
+                }
+            },
+            imageClass() {
+                return {
                     'tooltip-open': this.isTooltipOpen,
                     'warning': this.notification === 'warning',
                     'error': this.notification === 'error',
-                }
-                // obj[`icon-${this.notification}`] = !!this.notification
-                return obj
+                };
             }
         },
     }
