@@ -1,24 +1,22 @@
+import areaService from "../../services/area.service";
+
 export default {
     namespaced: true,
-        state: {
-        items: [
-            {icon: 'places',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-        ]
-    },
-    mutations: {
-
-    },
-    actions: {
-
+    state: {
+        items: []
     },
     getters: {
         items: (state) => state.items
+    },
+    actions: {
+        async getItems({commit}) {
+            const areas = await areaService.getAreas()
+            commit({type: 'setAreas', areas})
+        }
+    },
+    mutations: {
+        setAreas(state, {areas}) {
+            state.items = areas
+        }
     }
 }

@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-const PlaceSchema = new Schema({
-    icon:{
+const AreaSchema = new Schema({
+    img:{
         type:String,
         required: true
     },
-    iconFormat: {
+    imgFormat: {
       type: String,
-      // default
     },
     heading:{
         type: String,
@@ -22,4 +21,4 @@ const PlaceSchema = new Schema({
 });
 
 // Create collection and add schema
-mongoose.model('places', PlaceSchema, 'places');
+mongoose.model('areas', AreaSchema, 'areas');

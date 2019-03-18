@@ -1,24 +1,22 @@
+import targetService from "../../services/target.service";
+
 export default {
     namespaced: true,
         state: {
-        items: [
-            {icon: 'places',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-        ]
-    },
-    mutations: {
-
-    },
-    actions: {
-
+        items: []
     },
     getters: {
         items: (state) => state.items
-    }
+    },
+    actions: {
+        async getItems({commit}) {
+            const targets = await targetService.getTargets()
+            commit({type: 'setTargets', targets})
+        }
+    },
+    mutations: {
+        setTargets(state, {targets}) {
+            state.items = targets
+        }
+    },
 }

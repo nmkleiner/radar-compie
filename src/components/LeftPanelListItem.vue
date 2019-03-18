@@ -1,11 +1,12 @@
 <template>
     <li :icon="item.icon" :heading="item.heading" :text="item.text">
-        <button-cmp
-                :icon="item.icon"
-                :iconFormat="item.iconFormat"
+        <ButtonComponent
+                :icon="item.icon || icon"
+                :img="item.img"
+                :imgFormat="item.imgFormat"
                 :decoration="decoration"
                 :size="size"
-                :color="favorite? 'dark-blue' : 'dark-gray'"
+                :color="color"
                 :notification="item.notification"
                 :isTooltipOpen="item.isTooltipOpen"
                 shape="circle"
@@ -18,20 +19,30 @@
     </li>
 </template>
 <script>
-    import buttonCmp from './ButtonComponent'
-export default {
-    components: {
-        buttonCmp,
-    },
-    props: {
-        favorite: Boolean,
-        item: Object,
-        idx: Number,
-        size: {
-            type: String,
-            default: 'small'
+    import ButtonComponent from './ButtonComponent'
+    export default {
+        components: {
+            ButtonComponent,
         },
-        decoration: null
+        props: {
+            favorite: Boolean,
+            item: Object,
+            idx: Number,
+            size: {
+                type: String,
+                default: 'small'
+            },
+            decoration: null,
+            theme: String
+        },
+        computed: {
+            color: _this => _this.favorite? 'dark-blue' : 'dark-gray',
+            icon() {
+                if (this.theme === 'places') {
+                    return this.favorite? 'places' : 'places_g'
+                }
+                return 'icon'
+            }
+        },
     }
-}
 </script>

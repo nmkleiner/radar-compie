@@ -1,25 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import userService from './services/user.service'
+import radarPage from './views/RadarPage.vue'
+
+const loginPage = () => import('./views/LoginPage.vue')
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [
+        {
+            path: '/',
+            name: 'radar-page',
+            component: radarPage,
+            beforeEnter: async (to, from, next) => {
+                console.log('from', from, 'to', to)
+                const isLoggedIn = await userService.isLoggedIn()
+                if (isLoggedIn) {
+                    next()
+                } else {
+                    next('/login')
+                }
+            }
+        },
+        {
+            path: '/login',
+            name: 'login-page',
+            component: loginPage
+        }
+    ]
 })

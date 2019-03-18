@@ -1,14 +1,14 @@
 <template>
     <div class="slot-btns">
-        <button-cmp
+        <ButtonComponent
                 v-for="(btn,i) in slotButtons"
                 :key="i"
-                :icon="btn.name"
-                iconFormat="png"
+                :img="btn.name"
+                imgFormat="png"
         />
 
         <div class="up-down-wrapper">
-            <button-cmp
+            <ButtonComponent
                     v-for="(btn,i) in upDownButtons"
                     :key="i"
                     :icon="btn.name"
@@ -17,10 +17,10 @@
     </div>
 </template>
 <script>
-    import buttonCmp from'./button-cmp'
+    import ButtonComponent from './ButtonComponent'
 export default {
     components: {
-        buttonCmp
+        ButtonComponent
     },
     data() {
         return {

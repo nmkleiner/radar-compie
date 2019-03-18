@@ -22,4 +22,4 @@ const PlaceSchema = new Schema({
 });
 
 // Create collection and add schema
-mongoose.model('places', PlaceSchema, 'places');
+mongoose.model('devices', PlaceSchema, 'devices');

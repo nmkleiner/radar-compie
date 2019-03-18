@@ -1,9 +1,9 @@
 <template>
     <div class="radar-page">
         <div class="top-left-buttons-wrapper">
-            <button-cmp
+            <ButtonComponent
                     v-for="(btn,i) in topButtons"
-                    @click.native="openLeftPanel(btn.name)"
+                    @click.native="setLeftPanelTheme(btn.name)"
                     color="dark-blue"
                     size="small"
                     shape="circle"
@@ -11,55 +11,56 @@
                     :key="i"
             />
         </div>
-        <button-cmp
+        <ButtonComponent
                 class="top-right-btn"
                 color="dark-blue"
                 size="small"
                 shape="round-left"
-                icon="places"
+                icon="binoculars"
                 :notification="true"
                 @click.native="toggleRightPanel"
         />
-        <left-panel v-if="leftPanel.isOpen" :theme="leftPanel.theme"/>
-        <right-panel @closePanel="toggleRightPanel" v-if="rightPanel.isOpen" />
+        <LeftPanel />
+        <RightPanel @closePanel="toggleRightPanel" v-if="isRightPanelOpen" />
         <div class="bottom-right-btns-wrapper">
-            <button-cmp shape="circle" color="white" size="small" icon="Union" />
+            <ButtonComponent shape="circle" color="white" size="small" icon="Union" />
 
-            <slot-btn />
+            <SlotButton />
         </div>
-        <button-cmp
+        <ButtonComponent
                 class="bottom-left-btn"
                 color="white"
                 size="small"
                 shape="circle"
                 icon="Union"
         />
-        <scale/>
+        <Scale/>
     </div>
 </template>
 
 <script>
-    import buttonCmp from '../components/button-cmp'
-    import slotBtn from '../components/slot-btn'
-    import scale from '../components/scale'
-    import leftPanel from '../components/left-panel'
-    import rightPanel from '../components/right-panel'
+    import ButtonComponent from '../components/ButtonComponent'
+    import SlotButton from '../components/SlotButton'
+    import Scale from '../components/Scale'
+    import LeftPanel from '../components/LeftPanel'
+    import RightPanel from '../components/RightPanel'
 
     export default {
         name: 'home',
         components: {
-            buttonCmp,
-            slotBtn,
-            scale,
-            leftPanel,
-            rightPanel
+            ButtonComponent,
+            SlotButton,
+            Scale,
+            LeftPanel,
+            RightPanel
         },
         methods: {
-            openLeftPanel(theme) {
-                if (theme !== 'burger') this.leftPanel.theme = theme;
+            setLeftPanelTheme(theme) {
+                this.$store
+                    .dispatch({type: 'leftPanel/setTheme', theme})
             },
             toggleRightPanel() {
-                this.rightPanel.isOpen = !this.rightPanel.isOpen
+                this.$store.dispatch('rightPanel/togglePanel')
             }
         },
         data() {
@@ -70,14 +71,10 @@
                     {name: 'areas'},
                     {name: 'places'}
                 ],
-                leftPanel: {
-                    theme: 'places',
-                    isOpen: true
-                },
-                rightPanel: {
-                    isOpen: false
-                }
             }
+        },
+        computed: {
+            isRightPanelOpen: _this => _this.$store.getters['rightPanel/isOpen']
         }
     }
 </script>

@@ -1,15 +1,15 @@
 <template>
     <div class="input-wrapper" :class="shape">
-        <img v-if="leftIcon" :src="`images/icons/${leftIcon}`" class="input-left-symbol">
+        <i :class="'icon-' + leftIcon" class="input-left-symbol"></i>
         <div v-if="leftIcon" class="divider"></div>
-        <input type="text" :placeholder="placeholder" />
+        <input :type="type" :placeholder="placeholder" :value="value" ref="input" @input="updateValue"/>
+        <span v-if="msg" class="msg-label caps">{{msg}}</span>
 
-        <span v-if="rightIcon && !rightIcon.includes('.')" class="input-right-symbol">{{rightIcon}}</span>
-        <img
-                v-if="rightIcon && rightIcon.includes('.')"
-              :src="`images/icons/${rightIcon}`"
-        />
-
+        <span v-if="rightIcon.isText" class="input-right-symbol">{{rightIcon.name}}</span>
+        <i
+                v-if="!rightIcon.isText"
+                :class="'icon-' + rightIcon.name"
+        ></i>
     </div>
 </template>
 <script>
@@ -18,8 +18,15 @@
             shape: String,
             type: String,
             placeholder: String,
-            rightIcon: null,
+            rightIcon: Object,
             leftIcon: null,
+            value: null,
+            msg: String
+        },
+        methods: {
+            updateValue() {
+                this.$emit('input', this.$refs.input.value)
+            }
         },
     }
 </script>

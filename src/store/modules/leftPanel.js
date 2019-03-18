@@ -1,23 +1,34 @@
+import places from "./places";
+import areas from "./areas";
+import devices from "./devices";
+
 export default {
     namespaced: true,
     state: {
-        items: [
-            {icon: 'control-bg', iconFormat: 'jpg', heading: 'F12', text: 'North Control Tower Bargam...'},
-            {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-            {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-            {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-            {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-            {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-        ]
-    },
-    mutations: {
-
-    },
-    actions: {
-
+        theme: 'places'
     },
     getters: {
-        items: (state) => state.items
-
+        items: (state) => state[state.theme].items,
+        theme: (state) => state.theme,
+    },
+    actions: {
+        setTheme({commit}, {theme}) {
+            commit({type: 'setTheme', theme})
+        },
+        getItems({dispatch}) {
+            dispatch('places/getItems')
+            dispatch('areas/getItems')
+            dispatch('devices/getItems')
+        }
+    },
+    mutations: {
+        setTheme(state, {theme}) {
+            state.theme = theme
+        }
+    },
+    modules: {
+        places,
+        areas,
+        devices,
     }
 }

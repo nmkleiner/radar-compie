@@ -1,7 +1,7 @@
 <template>
     <main class="not-found">
         <img :src="pic"/>
-        <h4>{{theme | capitalize}} not found</h4>
+        <h4 class="caps">{{theme}} not found</h4>
         <span>We can't find any {{theme}} matching your search</span>
         <h4>Recent searches</h4>
         <div class="chips-wrapper">
@@ -45,15 +45,7 @@ export default {
     created() {
         this.pic = require(`../../public/images/icons/${this.theme}_not_found.svg`)
     },
-    filters: {
-        capitalize: function (value) {
-            if (!value) return ''
-            value = value.toString()
-            return value.charAt(0).toUpperCase() + value.slice(1)
-        }
-    }
 }
 </script>
 <style lang="scss" scoped>
-
 </style>

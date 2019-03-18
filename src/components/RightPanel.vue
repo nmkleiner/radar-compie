@@ -2,7 +2,7 @@
     <div class="right-panel">
         <header>
             <div class="wrapper">
-                <img src="images/icons/binoculars.svg" @click="closePanel"/>
+                <i class="icon-binoculars" @click="closePanel"></i>
                 <h2>Targets</h2>
             </div>
 
@@ -15,18 +15,16 @@
             </div>
         </header>
 
-
-
         <main>
-            <input-cmp
+            <InputComponent
                     shape="padded"
                     type="text"
                     placeholder="Type or select filter"
-                    rightIcon="x"
-                    left-icon="filter.svg"
-            ></input-cmp>
+                    :rightIcon="{name: 'x', isText: true}"
+                    left-icon="filter"
+            />
             <ul>
-                <right-panel-li
+                <RightPanelListItem
                         v-for="(target ,i) in targets"
                         :key="i"
                         :active="target.active"
@@ -40,36 +38,23 @@
     </div>
 </template>
 <script>
-    import inputCmp from './input-cmp'
-    import rightPanelLi from './right-panel-li'
+    import InputComponent from './InputComponent'
+    import RightPanelListItem from './RightPanelListItem'
 export default {
     components: {
-        inputCmp,
-        rightPanelLi
-    },
-    props: {
-
-    },
-    data() {
-        return {
-            targets: [
-                { active: true, color: 'high-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-                { active: true, color: 'low-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-                { active: true, color: 'med-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-                { active: true, color: 'med-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-                { active: true, color: 'med-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-                { active: false, color: 'reference-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-                { active: false, color: 'high-alert', serialNum: 'C23465', heading: 'Car Driving Fast', location: 'F22 Raptor Hangar'},
-            ]
-        }
+        InputComponent,
+        RightPanelListItem
     },
     methods: {
         closePanel() {
-            this.$emit('closePanel')
+            this.$store.dispatch('rightPanel/togglePanel')
         }
     },
     computed: {
-
+        targets: _this => _this.$store.getters['rightPanel/targets/items']
+    },
+    created() {
+        this.$store.dispatch('rightPanel/getItems')
     }
 }
 </script>

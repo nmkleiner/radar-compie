@@ -1,24 +1,22 @@
+import deviceService from "../../services/device.service";
+
 export default {
     namespaced: true,
-        state: {
-        items: [
-            {icon: 'places',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-            {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-        ]
-    },
-    mutations: {
-
-    },
-    actions: {
-
+    state: {
+        items: []
     },
     getters: {
         items: (state) => state.items
+    },
+    actions: {
+        async getItems({commit}) {
+            const devices = await deviceService.getDevices()
+            commit({type: 'setDevices', devices})
+        }
+    },
+    mutations: {
+        setDevices(state, {devices}) {
+            state.items = devices
+        }
     }
 }

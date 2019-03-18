@@ -1,11 +1,11 @@
 const axios = require('axios');
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000/';
 
 export default {
-    getPlaces
+    getAreas
 }
 
-async function getPlaces() {
-    const places = await axios.get('http://localhost:3000/places')
-    console.log('places',places.data)
-    return places.data
+async function getAreas() {
+    const areas = await axios.get(`${BASE_URL}areas`)
+    return areas.data
 }

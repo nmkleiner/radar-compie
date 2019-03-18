@@ -3,114 +3,81 @@
 
         <header>
             <h2>{{theme | capitalize}}</h2>
-            <input-cmp
+            <InputComponent
                     shape="padded"
                     type="text"
                     placeholder="Type or select filter"
-                    rightIcon="x"
-                    left-icon="filter.svg"
-            ></input-cmp>
+                    :rightIcon="{name: 'x', isText: true}"
+                    left-icon="filter"
+            />
             <span>22 {{theme | capitalize}}</span>
         </header>
 
-        <main v-if="items.length">
+        <main v-if="items && items.length">
             <ul v-if="theme === 'places'">
-                <panel-list-item
+                <LeftPanelListItem
                         v-for="(item,i) in items"
                         :decoration="i === 0 && '★'"
                         :favorite="i === 0"
                         :item="item"
                         :key="i"
                         :idx="i"
+                        :theme="theme"
                 />
             </ul>
 
             <ul v-if="theme === 'areas'">
-                <panel-list-item
+                <LeftPanelListItem
                         v-for="(item,i) in items"
                         :item="item"
                         :key="i"
+                        :theme="theme"
                 />
             </ul>
 
             <ul v-if="theme === 'devices'">
-                <panel-list-item
+                <LeftPanelListItem
                         v-for="(item,i) in items"
                         :item="item"
                         size="medium"
                         :key="i"
                         :idx="i"
+                        :theme="theme"
                 />
             </ul>
             <div class="opacity-layer"></div>
         </main>
 
-        <not-found v-else :theme="theme"></not-found>
+        <NotFound v-else :theme="theme"/>
     </div>
 </template>
 <script>
 
-    import panelListItem from './left-panel-li'
-    import notFound from './not-found'
-    import inputCmp from './input-cmp'
+    import LeftPanelListItem from './LeftPanelListItem'
+    import NotFound from './NotFound'
+    import InputComponent from './InputComponent'
 
     export default {
         components: {
-            panelListItem,
-            notFound,
-            inputCmp
-        },
-        props: {
-            theme: String
-        },
-        data() {
-            return {
-                // theme: 'places',
-                // theme: 'areas',
-                // theme: 'devices',
-                places: [
-                    {icon: 'places',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    {icon: 'places_g',heading: 'Safe Zone',text: 'North Control Tower, Bargam...'},
-                    ],
-                areas: [
-                    {icon: 'control-bg', iconFormat: 'jpg', heading: 'F12', text: 'North Control Tower Bargam...'},
-                    {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-                    {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-                    {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-                    {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-                    {icon: 'control-bg', iconFormat: 'jpg', heading: 'Safe Zone', text: 'North Control Tower Bargam...'},
-                ],
-                devices: [
-                    {icon: 'radar', heading: 'Abiron C669', text: 'North Control Tower, Bargam Airfield', notification: 'ok'},
-                    {icon: 'radar', heading: 'Abiron C669', text: 'North Control Tower, Bargam...', notification: 'warning', isTooltipOpen: true },
-                    {icon: 'radar', heading: 'Abiron C669', text: 'Main Runway, Bargam Airfield', notification: 'error'},
-                    {icon: 'Camera', heading: 'Abiron C669', text: 'Main Runway, Bargam Airfield', notification: 'ok'},
-                    {icon: 'Camera', heading: 'Abiron C669', text: 'Main Runway, Bargam Airfield', notification: 'ok'},
-                    {icon: 'Camera', heading: 'Abirona', text: 'Main Runway, Bargam Airfield', notification: 'error', isTooltipOpen: true},
-                    {icon: 'radar', heading: 'Tower 360', text: 'North Control Tower, Bargam Airfield', notification: 'ok'},
-                    {icon: 'radar', heading: 'Tower 360', text: 'North Control Tower, Bargam Airfield'},
-
-                ]
-            }
+            LeftPanelListItem,
+            NotFound,
+            InputComponent
         },
         computed: {
-            items: function() {
-                return this[this.theme]
-            }
-
+            theme: _this => _this.$store.getters['leftPanel/theme'],
+            items: _this => _this.$store.getters['leftPanel/items'],
         },
         filters: {
             capitalize: function (value) {
-                if (!value) return ''
+                if (!value) {
+                    return ''
+                }
                 value = value.toString()
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
+        },
+        created() {
+            this.$store.dispatch('leftPanel/getItems')
         }
     }
 </script>

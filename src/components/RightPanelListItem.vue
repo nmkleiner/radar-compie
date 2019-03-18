@@ -5,7 +5,7 @@
             <div class="top-wrapper">
                 <div class="active-wrapper">
                     <div class="active-light"></div>
-                    <span :style="{color: !active && '#78849e'}">{{active? 'ACTIVE' : 'Inactive'}}</span>
+                    <span :style="activeStyle">{{activeText}}</span>
                 </div>
                 <span class="c-num">{{serialNum}}</span>
             </div>
@@ -29,7 +29,8 @@ export default {
         }
     },
     computed: {
-
+        activeText: _this => _this.active? 'ACTIVE' : 'Inactive',
+        activeStyle: _this => ({color: !_this.active && '#78849e'})
     }
 }
 </script>

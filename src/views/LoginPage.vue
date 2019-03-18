@@ -20,49 +20,63 @@
             <a class="learn-more-link">> Learn more about our system</a>
             <form>
 
-                <input-cmp
+                <InputComponent
                         shape="line"
                         type="email"
                         placeholder="email"
+                        v-model="loginData.email"
+                        :msg="emailError"
                 />
 
-                <input-cmp
+                <InputComponent
+                        class="second"
                         shape="line"
                         type="password"
                         placeholder="password"
-                        rightIcon="hide.svg"
-                        class="second"
+                        :rightIcon="{name: 'hide', isText: false}"
+                        v-model="loginData.password"
+                        :msg="passwordError"
                 />
 
                 <div class="btns-wrapper">
                     <a>Forgot password?</a>
-                    <button-cmp shape="contained" @click.native.prevent="" type="submit" text="CONNECT"></button-cmp>
+                    <ButtonComponent shape="contained" @click.native.prevent="login" text="CONNECT"></ButtonComponent>
                 </div>
             </form>
         </section>
     </div>
 </template>
 <script>
-    import inputCmp from '../components/input-cmp'
-    import buttonCmp from '../components/button-cmp'
+    import InputComponent from '../components/InputComponent'
+    import ButtonComponent from '../components/ButtonComponent'
 export default {
     components: {
-        inputCmp,
-        buttonCmp
-    },
-    props: {
-
+        InputComponent,
+        ButtonComponent
     },
     data() {
         return {
-
+            loginData: {
+                email: '',
+                password: ''
+            },
+            emailError: '',
+            passwordError: '',
         }
     },
-    computed: {
-
-    }
+    methods: {
+        async login() {
+            this.emailError = ''
+            this.passwordError = ''
+            const user = await this.$store.dispatch({type: 'users/login', loginData: this.loginData})
+            if (user.email) {
+                this.$router.push('/')
+            }
+            else {
+                if (user.emailError) this.emailError = user.emailError;
+                else this.passwordError = user.passwordError;
+            }
+        }
+    },
 }
 </script>
-<style lang="scss" scoped>
-
-</style>

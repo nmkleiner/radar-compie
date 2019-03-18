@@ -1,6 +1,6 @@
 @import "base/reset.css";
-@import "~normalize-scss";
-@include normalize();
+//@import "~normalize-scss";
+//@include normalize();
 
 @import "base/config";
 
@@ -18,12 +18,16 @@
 @import "utils/global";
 @import "utils/imgs";
 @import "utils/mixins";
+@import "utils/helpers";
 
 // Start css (html, body, containers, font and etc..)
 @import "base/vars";
 @import "base/fonts";
-@import "base/global";
 @import "base/buttons";
-@import "base/tabs";
-@import "pages/control-page";
+@import "base/inputs";
+@import "svg_font/style.css";
+
+//@import "base/tabs";
+@import "pages/radar-page";
 @import "pages/login-page";
+@import "components/left-panel";

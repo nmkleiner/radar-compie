@@ -1,23 +1,25 @@
-import areaService from "../../services/area.service";
+import userService from "../../services/user.service";
 
 export default {
     namespaced: true,
     state: {
-        items: []
-    },
-    mutations: {
-        setAreas(state, {areas}) {
-            state.items = areas
-        }
-    },
-    actions: {
-        async getItems({commit}) {
-            const areas = await areaService.getAreas()
-            commit({type: 'setAreas', areas})
-        }
+        loggedInUser: {}
     },
     getters: {
-        items: (state) => state.items
-
-    }
+        loggedInUser: (state) => state.loggedInUser
+    },
+    actions: {
+        async login({commit},{loginData}) {
+            const user = await userService.login(loginData)
+            if (user) {
+                commit({type: 'setLoggedIUser', user})
+                return user
+            } else return null;
+        },
+    },
+    mutations: {
+        setLoggedIUser(state, {user}) {
+            state.loggedInUser = user
+        }
+    },
 }
