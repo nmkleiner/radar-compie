@@ -60,6 +60,7 @@
         computed: {
             targets: _this => _this.$store.getters['rightPanel/targets/items']
                 .filter(item => item.heading.toLowerCase().includes(_this.filter.toLowerCase()))
+                .sort((item1,item2)=> item2.active - item1.active)
         },
         created() {
             this.$store.dispatch('rightPanel/getItems')
