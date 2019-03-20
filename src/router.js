@@ -15,19 +15,22 @@ export default new Router({
             path: '/',
             name: 'radar-page',
             component: radarPage,
-            beforeEnter: async (to, from, next) => {
-                const isLoggedIn = await userService.isLoggedIn()
-                if (isLoggedIn) {
-                    next()
-                } else {
-                    next('/login')
-                }
-            }
+            // beforeEnter: async (to, from, next) => {
+            //     const isLoggedIn = await userService.isLoggedIn()
+            //     if (isLoggedIn) {
+            //         next()
+            //     } else {
+            //         next({name: 'login-page'})
+            //     }
+            // }
         },
         {
             path: '/login',
             name: 'login-page',
             component: loginPage
+        },
+        {
+            path: '*', redirect: {name: 'radar-page'}
         }
     ]
 })

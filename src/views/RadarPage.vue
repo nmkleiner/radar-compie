@@ -1,5 +1,6 @@
 <template>
     <div class="radar-page">
+
         <div class="top-left-buttons-wrapper">
             <ButtonComponent
                     v-for="(btn,i) in topButtons"
@@ -11,6 +12,7 @@
                     :key="i"
             />
         </div>
+
         <ButtonComponent
                 class="top-right-btn"
                 color="dark-blue"
@@ -20,13 +22,25 @@
                 :notification="true"
                 @click.native="toggleRightPanel"
         />
-        <LeftPanel/>
-        <RightPanel @closePanel="toggleRightPanel" v-if="isRightPanelOpen"/>
-        <div class="bottom-right-btns-wrapper">
-            <ButtonComponent shape="circle" color="white" size="small" icon="Union"/>
 
-            <SlotButton/>
+        <transition name="fade" appear>
+            <LeftPanel v-if="isLeftPanelOpen"/>
+        </transition>
+
+        <transition name="slide">
+            <TargetPanel @closePanel="toggleRightPanel" v-if="isRightPanelOpen"/>
+        </transition>
+
+        <div class="bottom-right-buttons-wrapper">
+            <ButtonComponent
+                    shape="circle"
+                    color="white"
+                    size="small"
+                    icon="Union"
+            />
+            <ZoomButtons/>
         </div>
+
         <ButtonComponent
                 class="bottom-left-btn"
                 color="white"
@@ -34,6 +48,7 @@
                 shape="circle"
                 icon="Union"
         />
+
         <Scale/>
     </div>
 </template>
@@ -41,19 +56,20 @@
 <script>
     import {mapActions, mapState} from 'vuex'
     import ButtonComponent from '../components/ButtonComponent'
-    import SlotButton from '../components/SlotButton'
+    import ZoomButtons from '../components/ZoomButtons'
     import Scale from '../components/Scale'
     import LeftPanel from '../components/LeftPanel'
-    import RightPanel from '../components/TargetPanel'
+    import TargetPanel from '../components/TargetPanel'
+    import userService from '../services/user.service'
 
     export default {
-        name: 'home',
+        name: 'radar-page',
         components: {
             ButtonComponent,
-            SlotButton,
+            ZoomButtons,
             Scale,
             LeftPanel,
-            RightPanel
+            TargetPanel
         },
         methods: {
             ...mapActions({
@@ -73,8 +89,17 @@
         },
         computed: {
             ...mapState({
-                isRightPanelOpen: (state) => state.targetPanel.isOpen
+                isRightPanelOpen: (state) => state.targetPanel.isOpen,
+                isLeftPanelOpen: (state) => state.leftPanel.isPanelOpen
             })
+        },
+        beforeRouteEnter: async (to, from, next) => {
+            const isLoggedIn = await userService.isLoggedIn()
+            if (isLoggedIn) {
+                next()
+            } else {
+                next({name: 'login-page'})
+            }
         }
     }
 </script>

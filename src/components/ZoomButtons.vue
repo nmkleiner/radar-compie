@@ -1,5 +1,5 @@
 <template>
-    <div class="slot-btns">
+    <div class="zoom-buttons">
         <ButtonComponent
                 v-for="(btn,i) in slotButtons"
                 :key="i"

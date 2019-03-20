@@ -1,5 +1,5 @@
 <template>
-    <div class="right-panel">
+    <div class="target-panel">
         <header>
             <div class="wrapper">
                 <i class="icon-binoculars" @click="closePanel"></i>
@@ -42,7 +42,7 @@
 </template>
 <script>
     import InputComponent from './InputComponent'
-    import RightPanelListItem from './RightPanelListItem'
+    import RightPanelListItem from './TargetItem'
     import {mapActions, mapGetters} from 'vuex'
 
     export default {

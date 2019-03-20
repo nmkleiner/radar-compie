@@ -1,31 +1,21 @@
 <template>
     <div :class="theme" class="left-panel">
 
-        <header>
-            <h2 class="caps">{{theme}}</h2>
-            <InputComponent
-                    shape="padded"
-                    type="text"
-                    placeholder="Type or select filter"
-                    :rightIcon="{name: 'x', isText: true}"
-                    left-icon="filter"
-                    v-model="filterBy"
-                    @input="filter({filter: filterBy})"
-            />
-            <span class="caps">22 {{theme}}</span>
-        </header>
+        <LeftPanelHeader :theme="theme"></LeftPanelHeader>
 
         <main v-if="items && items.length">
             <ul>
-                <component
-                        v-for="(item,i) in items"
-                        :is="themeItem"
-                        :decoration="i === 0 && '★'"
-                        :favorite="i === 0"
-                        :item="item"
-                        :key="i"
-                        :idx="i"
-                />
+                <transition-group name="fade" mode="out-in">
+                    <component
+                            :is="themeItem"
+                            v-for="(item,i) in items"
+                            :decoration="i === 0 && '★'"
+                            :favorite="i === 0"
+                            :item="item"
+                            :key="i"
+                            :idx="i"
+                    />
+                </transition-group>
             </ul>
         </main>
         <NotFound v-else :theme="theme"/>
@@ -38,6 +28,7 @@
     import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
     import AreaItem from "./AreaItem";
     import DeviceItem from "./DeviceItem";
+    import LeftPanelHeader from "./LeftPanelHeader";
 
     export default {
         components: {
@@ -45,7 +36,8 @@
             AreaItem,
             NotFound,
             InputComponent,
-            PlaceItem
+            PlaceItem,
+            LeftPanelHeader
         },
         computed: {
             ...mapState({
@@ -55,12 +47,15 @@
                 items: 'leftPanel/items',
             }),
             themeItem() {
-                if (this.theme === 'places') {
-                    return 'PlaceItem'
-                } else if (this.theme === 'devices') {
-                    return 'DeviceItem'
-                } else {
-                    return 'AreaItem'
+                switch (this.theme) {
+                    case 'places':
+                        return 'PlaceItem'
+                    case 'devices':
+                        return 'DeviceItem'
+                    case 'areas':
+                        return 'AreaItem'
+                    default:
+                        return ''
                 }
             }
         },
@@ -75,7 +70,6 @@
             }),
             ...mapActions({
                 fetchData: 'leftPanel/getItems',
-                filter: 'leftPanel/filter'
             }),
 
         },
@@ -84,3 +78,4 @@
         }
     }
 </script>
+

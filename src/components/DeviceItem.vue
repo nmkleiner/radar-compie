@@ -17,15 +17,11 @@
 
 <script>
     import ButtonComponent from './ButtonComponent'
-
+    import {itemMixin} from "../vue-mixins/itemMixin";
     export default {
+        mixins: [itemMixin],
         components: {
             ButtonComponent,
-        },
-        props: {
-            item: Object,
-            idx: Number,
-
         },
         data() {
             return {

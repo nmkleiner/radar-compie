@@ -1,9 +1,7 @@
 <template>
-    <li :icon="item.icon" :heading="item.heading" :text="item.text">
-        <ButtonComponent
-                :img="item.img"
-                :imgFormat="item.imgFormat"
-        />
+    <li class="area-item" :icon="item.icon" :heading="item.heading" :text="item.text">
+        <img :src="`images/icons/${item.img}.${item.imgFormat}`"/>
+
         <div class="text-wrapper">
             <h3>{{item.heading}}</h3>
             <span>{{item.text}}</span>
@@ -12,15 +10,10 @@
 </template>
 
 <script>
-    import ButtonComponent from './ButtonComponent'
+    import {itemMixin} from "../vue-mixins/itemMixin";
 
     export default {
-        components: {
-            ButtonComponent,
-        },
-        props: {
-            item: Object,
-        },
+        mixins: [itemMixin]
     }
 </script>
 

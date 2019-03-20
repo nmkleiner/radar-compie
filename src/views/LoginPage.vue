@@ -25,23 +25,24 @@
                         shape="line"
                         type="email"
                         placeholder="email"
-                        v-model="loginData.email"
-                        :msg="emailError"
+                        v-model="email"
+                        :msg="emailMsg || ''"
+                        @input.native="$v.email.$touch()"
                 />
-
                 <InputComponent
                         class="second"
                         shape="line"
                         type="password"
                         placeholder="password"
                         :rightIcon="{name: 'hide', isText: false}"
-                        v-model="loginData.password"
-                        :msg="passwordError"
+                        v-model="password"
+                        @input.native="$v.password.$touch()"
+                        :msg="passwordMsg || ''"
                 />
 
                 <div class="btns-wrapper">
                     <a>Forgot password?</a>
-                    <ButtonComponent shape="contained" @click.native.prevent="login" text="CONNECT"></ButtonComponent>
+                    <ButtonComponent :disabled="$v.$error" shape="contained" @click.native.prevent="login" text="CONNECT"></ButtonComponent>
                 </div>
             </form>
         </section>
@@ -50,6 +51,7 @@
 <script>
     import InputComponent from '../components/InputComponent'
     import ButtonComponent from '../components/ButtonComponent'
+    import {email, required} from 'vuelidate/lib/validators'
     import {mapActions} from 'vuex'
 
     export default {
@@ -59,10 +61,8 @@
         },
         data() {
             return {
-                loginData: {
-                    email: '',
-                    password: ''
-                },
+                email: '',
+                password: '',
                 emailError: '',
                 passwordError: '',
             }
@@ -74,7 +74,7 @@
             async login() {
                 this.emailError = ''
                 this.passwordError = ''
-                const user = await this.sendLogin({loginData: this.loginData})
+                const user = await this.sendLogin({loginData: {email: this.email, password: this.password}})
                 if (user.email) {
                     this.$router.push('/')
                 } else {
@@ -83,5 +83,29 @@
                 }
             }
         },
+        computed: {
+            emailMsg() {
+                return !!this.emailError && this.emailError ||
+                    this.$v.email.$error && (
+                        !this.$v.email.email && 'Not a valid email' ||
+                        !this.$v.email.required && 'This field is required'
+                    )
+            },
+            passwordMsg() {
+                return !!this.passwordError && this.passwordError ||
+                    this.$v.password.$error && (
+                        !this.$v.password.required && 'This field is required'
+                    )
+            }
+        },
+        validations: {
+            email: {
+                required,
+                email
+            },
+            password: {
+                required
+            }
+        }
     }
 </script>

@@ -26,21 +26,26 @@ button {
     text-align: center;
     color: #ffffff;
     border: none;
-    .opacity-layer {
-      background-image: linear-gradient(to left, #3FBDFE, #098BFF);
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      border-radius: 999px;
-      opacity: .5;
-      z-index: 1;
+    transition: .2s;
+    &:disabled {
+      opacity: 0.34;
+      //background-image: linear-gradient(271deg, #3fbdfe, #098bff);
     }
-    span {
-      z-index: 2;
-      opacity: 1;
-    }
+    //.opacity-layer {
+    //  background-image: linear-gradient(to left, #3FBDFE, #098BFF);
+    //  width: 100%;
+    //  height: 100%;
+    //  position: absolute;
+    //  left: 0;
+    //  top: 0;
+    //  border-radius: 999px;
+    //  opacity: .5;
+    //  z-index: 1;
+    //}
+    //span {
+    //  z-index: 2;
+    //  opacity: 1;
+    //}
     @media (min-width: 769px) {
       margin-bottom: 0;
     }

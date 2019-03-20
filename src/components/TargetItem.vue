@@ -1,5 +1,5 @@
 <template>
-    <li :class="active? 'active' : 'inactive'">
+    <li class="target-item" :class="active? 'active' : 'inactive'">
         <div class="vertical-slot" :class="color"></div>
         <div class="text-wrapper">
             <div class="top-wrapper">
@@ -22,9 +22,6 @@
             serialNum: String,
             heading: String,
             location: String
-        },
-        data() {
-            return {}
         },
         computed: {
             activeText() {

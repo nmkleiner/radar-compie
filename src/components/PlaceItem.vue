@@ -1,5 +1,5 @@
 <template>
-    <li :icon="item.icon" :heading="item.heading" :text="item.text">
+    <li class="place-item" :icon="item.icon" :heading="item.heading" :text="item.text">
         <ButtonComponent
                 :icon="item.icon || icon"
                 :img="item.img"
@@ -19,16 +19,16 @@
 
 <script>
     import ButtonComponent from './ButtonComponent'
+    import {itemMixin} from "../vue-mixins/itemMixin";
 
     export default {
+        mixins: [itemMixin],
         components: {
             ButtonComponent,
         },
         props: {
             decoration: null,
             favorite: Boolean,
-            item: Object,
-            idx: Number,
             size: {
                 type: String,
                 default: 'small'
