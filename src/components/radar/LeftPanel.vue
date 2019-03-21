@@ -23,7 +23,6 @@
 </template>
 <script>
     import NotFound from './NotFound'
-    import InputComponent from './InputComponent'
     import PlaceItem from './PlaceItem'
     import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
     import AreaItem from "./AreaItem";
@@ -35,7 +34,6 @@
             DeviceItem,
             AreaItem,
             NotFound,
-            InputComponent,
             PlaceItem,
             LeftPanelHeader
         },

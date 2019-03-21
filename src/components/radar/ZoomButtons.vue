@@ -1,23 +1,23 @@
 <template>
     <div class="zoom-buttons">
         <ButtonComponent
-                v-for="(btn,i) in slotButtons"
+                v-for="(button,i) in slotButtons"
                 :key="i"
-                :img="btn.name"
+                :img="button.name"
                 imgFormat="png"
         />
 
         <div class="up-down-wrapper">
             <ButtonComponent
-                    v-for="(btn,i) in upDownButtons"
+                    v-for="(button,i) in upDownButtons"
                     :key="i"
-                    :icon="btn.name"
+                    :icon="button.name"
             />
         </div>
     </div>
 </template>
 <script>
-    import ButtonComponent from './ButtonComponent'
+    import ButtonComponent from '../shared/ButtonComponent'
 export default {
     components: {
         ButtonComponent

@@ -1,13 +1,13 @@
 .input-wrapper {
   position: relative;
-  transition: .3;
-  &.line {
+  transition: .3s;
+  &.form-input {
     input {
       width: 100%;
+      height: 48px;
       border: none;
       border-bottom: 1px solid #78849e;
       font-size: 1.8rem;
-      @include relative-height(48px);
       transition: .3s;
 
       &:focus {
@@ -22,7 +22,7 @@
       }
     }
 
-    &.second {
+    &.hasRightIcon {
       position: relative;
       @include relative-margin-bottom(24px);
       @media (min-width: 769px) {
@@ -65,7 +65,7 @@
   }
 
 
-  &.padded {
+  &.filter-input {
     background-color: #fff;
     width: 343px / 375px * 100%;
     max-width: 360px;

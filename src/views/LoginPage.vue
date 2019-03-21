@@ -1,12 +1,7 @@
 <template>
     <div class="login-page">
 
-        <section class="welcome-section">
-            <div class="opacity-layer">
-                <span class="quote">"Advanced Security System beyond your dreams"</span>
-                <img src="../../public/images/radar-logo.svg"/>
-            </div>
-        </section>
+        <Welcome></Welcome>
 
         <section class="login-section">
             <img class="main-img" src="../../public/images/big-lock.svg"/>
@@ -19,45 +14,33 @@
                 Enter Your Login info
             </p>
             <a class="learn-more-link">> Learn more about our system</a>
+
             <form>
 
-                <InputComponent
-                        shape="line"
-                        type="email"
-                        placeholder="email"
-                        v-model="email"
-                        :msg="emailMsg || ''"
-                        @input.native="$v.email.$touch()"
-                />
-                <InputComponent
-                        class="second"
-                        shape="line"
-                        type="password"
-                        placeholder="password"
-                        :rightIcon="{name: 'hide', isText: false}"
-                        v-model="password"
-                        @input.native="$v.password.$touch()"
-                        :msg="passwordMsg || ''"
-                />
+                <FormInput v-model="email" :input="form.inputs[0]"/>
 
-                <div class="btns-wrapper">
+                <FormInput v-model="password" :input="form.inputs[1]"/>
+
+                <div class="buttons-wrapper">
                     <a>Forgot password?</a>
-                    <ButtonComponent :disabled="$v.$error" shape="contained" @click.native.prevent="login" text="CONNECT"></ButtonComponent>
+                    <ButtonComponent shape="contained" @click.native.prevent="login" text="CONNECT"></ButtonComponent>
                 </div>
             </form>
         </section>
     </div>
 </template>
 <script>
-    import InputComponent from '../components/InputComponent'
-    import ButtonComponent from '../components/ButtonComponent'
-    import {email, required} from 'vuelidate/lib/validators'
+    import FormInput from '../components/shared/FormInput'
+    import ButtonComponent from '../components/shared/ButtonComponent'
+    import Welcome from '../components/login/Welcome'
     import {mapActions} from 'vuex'
+    import LoginForm from "../entities/LoginForm";
 
     export default {
         components: {
-            InputComponent,
-            ButtonComponent
+            FormInput,
+            ButtonComponent,
+            Welcome
         },
         data() {
             return {
@@ -65,12 +48,30 @@
                 password: '',
                 emailError: '',
                 passwordError: '',
+                form: new LoginForm({
+                    inputs: [
+                        {
+                            type: 'email',
+                            label: 'email',
+                            rules: 'required|email'
+                        },
+                        {
+                            type: 'password',
+                            label: 'password',
+                            rules: 'required',
+                            rightIcon: 'hide',
+                        },
+                    ]
+                })
             }
         },
         methods: {
             ...mapActions({
                 sendLogin: 'users/login'
             }),
+            // loginMe(){
+            //     this.form.submit();
+            // },
             async login() {
                 this.emailError = ''
                 this.passwordError = ''
@@ -84,28 +85,10 @@
             }
         },
         computed: {
-            emailMsg() {
-                return !!this.emailError && this.emailError ||
-                    this.$v.email.$error && (
-                        !this.$v.email.email && 'Not a valid email' ||
-                        !this.$v.email.required && 'This field is required'
-                    )
-            },
-            passwordMsg() {
-                return !!this.passwordError && this.passwordError ||
-                    this.$v.password.$error && (
-                        !this.$v.password.required && 'This field is required'
-                    )
-            }
+            // emailInput(){
+            //   return this.form.input('email');
+            // },
+
         },
-        validations: {
-            email: {
-                required,
-                email
-            },
-            password: {
-                required
-            }
-        }
     }
 </script>

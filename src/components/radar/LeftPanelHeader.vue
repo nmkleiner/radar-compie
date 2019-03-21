@@ -1,24 +1,28 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <header>
         <h2 class="caps">{{theme}}</h2>
-        <InputComponent
-                shape="padded"
+
+        <FilterInput
                 type="text"
                 placeholder="Type or select filter"
-                :rightIcon="{name: 'x', isText: true}"
                 left-icon="filter"
                 v-model="filterBy"
-        />
+        >
+            <template v-slot:right-icon>
+                <span class="input-right-symbol">x</span>
+            </template>
+        </FilterInput>
         <span class="caps">22 {{theme}}</span>
     </header>
 </template>
 
 <script>
-    import InputComponent from './InputComponent'
+    import FilterInput from '../shared/FilterInput'
     import {mapActions} from 'vuex'
+
     export default {
         components: {
-            InputComponent
+            FilterInput
         },
         props: {
             theme: {

@@ -30,7 +30,6 @@
             </div>
         </div>
     </main>
-
 </template>
 <script>
 export default {
@@ -43,9 +42,7 @@ export default {
         }
     },
     created() {
-        this.pic = require(`../../public/images/icons/${this.theme}_not_found.svg`)
+        this.pic = require(`../../../public/images/icons/${this.theme}_not_found.svg`)
     },
 }
 </script>
-<style lang="scss" scoped>
-</style>

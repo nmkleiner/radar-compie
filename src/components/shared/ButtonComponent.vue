@@ -1,18 +1,22 @@
 <template>
     <button :class="buttonClass" @mouseenter="toggleTooltip" @mouseleave="toggleTooltip">
-        <img v-if="img" :src="`images/icons/${img}.${imgFormat}`" alt="icon"/>
+
+        <img v-if="img" :src="iconSrc" alt="icon"/>
+
         <i v-else-if="icon" class="icon" :class="'icon-' + icon"></i>
+
         <div v-if="notification" class="notification"></div>
         <div v-if="notification === 'ok'" class="notification bottom right ok"></div>
-
         <img
                 v-if="notification === 'error' || notification === 'warning'"
                 class="notification bottom right error-notification"
                 :class="imageClass"
-                :src="`images/icons/${notification}.svg`"
+                :src="notificationSrc"
                 alt="notification"
         />
+
         <Tooltip v-if="isTooltipOpen" :notification="notification"/>
+
         <div v-if="!!decoration">{{decoration}}</div>
         {{text}}
 
@@ -82,6 +86,12 @@
                     'warning': this.notification === 'warning',
                     'error': this.notification === 'error',
                 };
+            },
+            notificationSrc() {
+                return require(`../../../public/images/icons/${this.notification}.svg`)
+            },
+            iconSrc() {
+                return require(`../../../public/images/icons/${this.img}.${this.imgFormat}`)
             }
         },
     }

@@ -4,7 +4,8 @@ import router from './router'
 import store from './store/store'
 import './assets/styles/_app.scss'
 import './registerServiceWorker'
-import vuelidate from 'vuelidate'
+import VeeValidate, { ValidationProvider } from 'vee-validate'
+
 Vue.config.productionTip = false
 
 Vue.directive('visible', (el, binding) => {
@@ -17,8 +18,13 @@ Vue.directive('visible', (el, binding) => {
   }
 });
 
-Vue.use(vuelidate)
+Vue.use(VeeValidate )
+Vue.component('ValidationProvider', ValidationProvider);
+
 new Vue({
+  // components: {
+  //   ValidationProvider
+  // },
   router,
   store,
   render: h => h(App)

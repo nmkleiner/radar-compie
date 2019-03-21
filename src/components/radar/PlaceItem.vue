@@ -18,8 +18,8 @@
 </template>
 
 <script>
-    import ButtonComponent from './ButtonComponent'
-    import {itemMixin} from "../vue-mixins/itemMixin";
+    import ButtonComponent from '../shared/ButtonComponent'
+    import {itemMixin} from "../../vue-mixins/itemMixin";
 
     export default {
         mixins: [itemMixin],

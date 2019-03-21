@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="target-panel">
         <header>
             <div class="wrapper">
@@ -16,16 +16,17 @@
         </header>
 
         <main>
-            <InputComponent
-                    shape="padded"
+            <PaddedInput
                     type="text"
                     placeholder="Type or select filter"
-                    :rightIcon="{name: 'x', isText: true}"
                     left-icon="filter"
                     v-model="filterBy"
-                    @input="filter({filter: filterBy})"
-
-            />
+                    @input="filter({filter: filterBy})"  
+            >
+                <template v-slot:right-icon>
+                    <span class="input-right-symbol">x</span>
+                </template>
+            </PaddedInput>
             <ul>
                 <RightPanelListItem
                         v-for="(target ,i) in targets"
@@ -41,13 +42,13 @@
     </div>
 </template>
 <script>
-    import InputComponent from './InputComponent'
+    import PaddedInput from '../shared/FilterInput'
     import RightPanelListItem from './TargetItem'
     import {mapActions, mapGetters} from 'vuex'
 
     export default {
         components: {
-            InputComponent,
+            PaddedInput,
             RightPanelListItem
         },
         methods: {

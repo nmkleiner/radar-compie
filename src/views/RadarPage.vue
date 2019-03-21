@@ -3,18 +3,18 @@
 
         <div class="top-left-buttons-wrapper">
             <ButtonComponent
-                    v-for="(btn,i) in topButtons"
-                    @click.native="setLeftPanelTheme({theme: btn.name})"
+                    v-for="(button,i) in topButtons"
+                    @click.native="setLeftPanelTheme({theme: button.name})"
                     color="dark-blue"
                     size="small"
                     shape="circle"
-                    :icon="btn.name"
+                    :icon="button.name"
                     :key="i"
             />
         </div>
 
         <ButtonComponent
-                class="top-right-btn"
+                class="top-right-button"
                 color="dark-blue"
                 size="small"
                 shape="round-left"
@@ -42,7 +42,7 @@
         </div>
 
         <ButtonComponent
-                class="bottom-left-btn"
+                class="bottom-left-button"
                 color="white"
                 size="small"
                 shape="circle"
@@ -55,11 +55,11 @@
 
 <script>
     import {mapActions, mapState} from 'vuex'
-    import ButtonComponent from '../components/ButtonComponent'
-    import ZoomButtons from '../components/ZoomButtons'
-    import Scale from '../components/Scale'
-    import LeftPanel from '../components/LeftPanel'
-    import TargetPanel from '../components/TargetPanel'
+    import ButtonComponent from '../components/shared/ButtonComponent'
+    import ZoomButtons from '../components/radar/ZoomButtons'
+    import Scale from '../components/radar/Scale'
+    import LeftPanel from '../components/radar/LeftPanel'
+    import TargetPanel from '../components/radar/TargetPanel'
     import userService from '../services/user.service'
 
     export default {
