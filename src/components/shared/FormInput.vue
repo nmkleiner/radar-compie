@@ -15,8 +15,8 @@
                         @input="updateValue"
                         @focus="handleFocus"
                         @blur="handleBlur"
-                        @change="handleChange"
                 />
+                        <!--@change="handleChange"-->
                 <span v-show="showInputErrorMsg" class="msg-label caps">
                     {{errors[0]}}
                 </span>
@@ -49,6 +49,7 @@
         methods: {
             updateValue() {
                 this.$emit('input', this.$refs.input.value)
+                this.handleChange()
             },
             handleFocus() {
                 this.isFloating = true

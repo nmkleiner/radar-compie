@@ -62,7 +62,8 @@ export default class SignupForm extends Form {
     }
 
     async submitSignup(signupData) {
-        const isValidForm = validate(signupData)
+        console.log('signupData1',signupData)
+        const isValidForm = this.validate(signupData)
         let successfulSignup = false
         if (isValidForm) {
             const res = await userService.signup(signupData)
@@ -79,6 +80,7 @@ export default class SignupForm extends Form {
     }
 
     validate(signupData) {
+        console.log('signupData2',signupData)
         let isValidForm = true
         if (!this.checkPasswords(signupData.password1, signupData.password2)) {
             this.inputs.password1.setErrorMsg()

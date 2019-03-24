@@ -41,14 +41,13 @@
         },
         data() {
             return {
-                formData: {},
                 form: new SignupForm()
             }
         },
         methods: {
-            async signup() {
+            async signup(signupData) {
                 this.form.resetErrorMessages();
-                const res = await this.form.submitSignup(this.signupData);
+                const res = await this.form.submitSignup(signupData);
                 if (res) {
                     this.$router.push('/login')
                 }

@@ -1,16 +1,17 @@
 <template>
     <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form">
-        <form @submit.prevent="$emit('submit',formData)">
+        <form @submit.prevent="handleSubmit">
             <FormInput
                     v-for="(input,key) in form.inputs"
                     v-model="formData[key]"
                     :input="input"
                     :key="key"
-                    @onInputChange="handleInputChange"
             />
+            <!--@onInputChange="handleInputChange"-->
             <div class="buttons-wrapper">
                 <a>Forgot password?</a>
-                <ButtonComponent :disabled="disabled" shape="contained" text="CONNECT"/>
+                <ButtonComponent shape="contained" text="CONNECT"/>
+                <!--:disabled="disabled" -->
             </div>
         </form>
     </ValidationObserver>
@@ -20,6 +21,7 @@
     import FormInput from './FormInput'
     import ButtonComponent from './ButtonComponent'
     import Form from '../../entities/Form'
+
     export default {
         name: "Form",
         components: {
@@ -31,19 +33,20 @@
         },
         data() {
             return {
-                disabled: true,
+                // disabled: true,
                 formData: {}
             }
         },
         methods: {
-            handleInputChange() {
-                if (this.$refs.observer.ctx.valid) {
-                    this.disabled = false
+            handleSubmit() {
+                const isValid = this.$refs.observer.validate()
+
+                if (isValid) {
+                    this.$emit('submit', this.formData)
                 }
             }
         },
         created() {
-            console.log('form',this.form.inputs)
             for (let input in this.form.inputs) {
                 this.formData[input] = ''
             }
