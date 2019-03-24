@@ -15,9 +15,13 @@
                         @input="updateValue"
                         @focus="handleFocus"
                         @blur="handleBlur"
+                        @change="handleChange"
                 />
-                <span v-show="showErrorMsg" class="msg-label caps">
+                <span v-show="showInputErrorMsg" class="msg-label caps">
                     {{errors[0]}}
+                </span>
+                <span v-show="input.showSubmitErrorMsg" class="msg-label caps">
+                    {{input.submitErrorMsg}}
                 </span>
             </div>
         </ValidationProvider>
@@ -32,13 +36,14 @@
     export default {
         props: {
             input: FormInput,
-            value: null
+            value: null,
         },
         data() {
             return {
                 isFloating: false,
                 inputValue: '',
-                showErrorMsg: false,
+                showInputErrorMsg: false,
+                showSubmitErrorMsg: false
             }
         },
         methods: {
@@ -53,15 +58,18 @@
                 this.handleIsFloating()
             },
             handleErrorMsg() {
-                this.showErrorMsg = true
+                this.showInputErrorMsg = true
             },
             handleIsFloating() {
                 if (!this.value) {
                     this.isFloating = false
                 }
+            },
+            handleChange() {
+                this.$emit('onInputChange')
             }
         },
-        created() {
+        mounted() {
             if (this.inputValue) {
                 this.isFloating = true
             }

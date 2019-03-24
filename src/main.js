@@ -4,7 +4,7 @@ import router from './router'
 import store from './store/store'
 import './assets/styles/_app.scss'
 import './registerServiceWorker'
-import VeeValidate, { ValidationProvider } from 'vee-validate'
+import VeeValidate, { ValidationProvider,ValidationObserver } from 'vee-validate'
 
 Vue.config.productionTip = false
 
@@ -20,6 +20,7 @@ Vue.directive('visible', (el, binding) => {
 
 Vue.use(VeeValidate )
 Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 new Vue({
   // components: {

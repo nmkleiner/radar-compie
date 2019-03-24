@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import userService from './services/user.service'
-import radarPage from './views/RadarPage.vue'
+import LoginPage from './views/LoginPage.vue'
+import SignupPage from "./views/SignupPage";
 
-const loginPage = () => import('./views/LoginPage.vue')
+const RadarPage = () => import('./views/RadarPage.vue')
 
 Vue.use(Router)
 
@@ -14,20 +14,17 @@ export default new Router({
         {
             path: '/',
             name: 'radar-page',
-            component: radarPage,
-            // beforeEnter: async (to, from, next) => {
-            //     const isLoggedIn = await userService.isLoggedIn()
-            //     if (isLoggedIn) {
-            //         next()
-            //     } else {
-            //         next({name: 'login-page'})
-            //     }
-            // }
+            component: RadarPage,
         },
         {
             path: '/login',
             name: 'login-page',
-            component: loginPage
+            component: LoginPage
+        },
+        {
+            path: '/signup',
+            name: 'signup-page',
+            component: SignupPage
         },
         {
             path: '*', redirect: {name: 'radar-page'}

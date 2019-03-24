@@ -3,6 +3,7 @@ const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000
 
 export default {
     login,
+    signup,
     isLoggedIn
 }
 
@@ -15,7 +16,17 @@ async function login(loginData) {
     return res.data
 }
 
+
 async function isLoggedIn() {
     const user = await JSON.parse(sessionStorage.getItem('radarUser'))
     return !!user
+}
+
+
+async function signup(signupData) {
+    const res = await axios.put(`${BASE_URL}users/signup`, signupData)
+    if (res.data.email) {
+        sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
+    }
+    return res.data
 }
