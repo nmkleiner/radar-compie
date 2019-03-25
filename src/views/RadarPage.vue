@@ -89,8 +89,8 @@
         },
         computed: {
             ...mapState({
-                isRightPanelOpen: (state) => state.targetPanel.isOpen,
-                isLeftPanelOpen: (state) => state.leftPanel.isPanelOpen
+                isRightPanelOpen: (state) => state.containers.targetPanel.isOpen,
+                isLeftPanelOpen: (state) => state.containers.leftPanel.isPanelOpen
             })
         },
         beforeRouteEnter: async (to, from, next) => {

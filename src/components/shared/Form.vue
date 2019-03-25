@@ -1,17 +1,21 @@
 <template>
     <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form">
         <form @submit.prevent="handleSubmit">
+            <!--<template v-for="(input,key) in form.inputs">-->
+
             <FormInput
                     v-for="(input,key) in form.inputs"
                     v-model="formData[key]"
                     :input="input"
                     :key="key"
             />
-            <!--@onInputChange="handleInputChange"-->
+                <!--<FormSelect>-->
+                    <!---->
+                <!--</FormSelect>-->
+            <!--</template>-->
             <div class="buttons-wrapper">
                 <a>Forgot password?</a>
                 <ButtonComponent shape="contained" text="CONNECT"/>
-                <!--:disabled="disabled" -->
             </div>
         </form>
     </ValidationObserver>
@@ -33,24 +37,22 @@
         },
         data() {
             return {
-                // disabled: true,
                 formData: {}
-            }
-        },
-        methods: {
-            handleSubmit() {
-                const isValid = this.$refs.observer.validate()
-
-                if (isValid) {
-                    this.$emit('submit', this.formData)
-                }
             }
         },
         created() {
             for (let input in this.form.inputs) {
                 this.formData[input] = ''
             }
-        }
+        },
+        methods: {
+            async handleSubmit() {
+                const isValid = await this.$refs.observer.validate()
+                if (isValid) {
+                    this.$emit('submit', this.formData)
+                }
+            }
+        },
     }
 </script>
 

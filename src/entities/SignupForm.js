@@ -62,7 +62,6 @@ export default class SignupForm extends Form {
     }
 
     async submitSignup(signupData) {
-        console.log('signupData1',signupData);
         const isValidForm = this.validate(signupData);
         let successfulSignup = false;
         if (isValidForm) {
@@ -72,7 +71,6 @@ export default class SignupForm extends Form {
             } else if (res.usernameError) {
                 this.inputs.username.setErrorMsg()
             } else {
-                console.log('res', res);
                 successfulSignup = true
             }
         }
@@ -80,7 +78,6 @@ export default class SignupForm extends Form {
     }
 
     validate(signupData) {
-        console.log('signupData2',signupData);
         let isValidForm = true;
         if (!this.checkPasswords(signupData.password1, signupData.password2)) {
             this.inputs.password1.setErrorMsg();

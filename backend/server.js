@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 
 
+
 require('./models/Place');
 require('./models/Area');
 require('./models/Device');

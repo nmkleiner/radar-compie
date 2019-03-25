@@ -6,27 +6,48 @@ export default {
     signup,
     isLoggedIn
 }
+const USER = 'USER'
+const TOKEN = 'TOKEN'
 
 async function login(loginData) {
-    const {email,password} = loginData
-    const res = await axios.post(`${BASE_URL}users/login`, {email,password})
-    if (res.data.email) {
-        sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
+    const {email, password} = loginData;
+    try {
+        const res = await axios.post(`${BASE_URL}users/login`, {email, password});
+        if (res.data && res.data.user.email) {
+            sessionStorage.setItem(USER, JSON.stringify({email: res.data.user.email}));
+            localStorage.setItem(TOKEN, JSON.stringify(res.data.token))
+        }
+        return res.data.user
+    } catch (err) {
+        const {message} = err.response.data
+        if (message === 'email') {
+            return {emailError: 'Unknown Email Address'}
+        } else if (message === 'password') {
+            return {passwordError: 'Password is incorrect'}
+        }
     }
-    return res.data
 }
 
 
 async function isLoggedIn() {
-    const user = await JSON.parse(sessionStorage.getItem('radarUser'))
+    const user = await JSON.parse(sessionStorage.getItem('radarUser'));
     return !!user
 }
 
 
 async function signup(signupData) {
-    const res = await axios.post(`${BASE_URL}users/signup`, signupData)
-    if (res.data.email) {
-        sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
+    try {
+        const res = await axios.post(`${BASE_URL}users/signup`, signupData);
+        if (res.data.email) {
+            sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
+        }
+        return res.data
+    } catch (err) {
+        const {message} = err.response.data
+        if (message === 'email') {
+            return {emailError: 'Email already registered'}
+        } else if (message === 'username') {
+            return {usernameError: 'username already in use'}
+        }
     }
-    return res.data
 }

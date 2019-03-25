@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const jwtService = require('../keys/JWT.service')
 const Device = mongoose.model('devices');
 const router = express.Router();
 

@@ -38,7 +38,7 @@
         },
         computed: {
             ...mapState({
-                theme: (state) => state.leftPanel.theme
+                theme: (state) => state.containers.leftPanel.theme
             }),
             ...mapGetters({
                 items: 'leftPanel/items',
