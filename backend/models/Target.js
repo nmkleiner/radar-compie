@@ -15,13 +15,17 @@ const TargetSchema = new Schema({
         type: String,
         required: true
     },
-    heading:{
+    title:{
         type: String,
         required: true
     },
     location: {
-        type: String,
+        type: Object,
         required: true
+    },
+    area: {
+        type: Schema.Types.ObjectId,
+        ref: 'areas'
     }
 });
 

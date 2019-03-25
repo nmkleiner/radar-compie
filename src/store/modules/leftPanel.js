@@ -11,7 +11,7 @@ export default {
     },
     getters: {
         items: (state) => state[state.theme].items
-            .filter(item => item.heading.toLowerCase().includes(state.filter) ||
+            .filter(item => item.title.toLowerCase().includes(state.filter) ||
                 item.text.toLowerCase().includes(state.filter)
             ),
     },

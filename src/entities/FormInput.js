@@ -4,8 +4,8 @@ export default class FormInput {
         this.label = settings.label || '';
         this.rules = settings.rules || '';
         this.rightIcon= settings.rightIcon || '';
-        this.showSubmitErrorMsg = settings.showSubmitErrorMsg || false
-        this.submitErrorMsg = settings.submitErrorMsg || ''
+        this.showSubmitErrorMsg = settings.showSubmitErrorMsg || false;
+        this.submitErrorMsg = settings.submitErrorMsg || '';
     }
 
     setErrorMsg() {

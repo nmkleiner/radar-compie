@@ -1,10 +1,10 @@
 <template>
-    <li class="area-item" :icon="item.icon" :heading="item.heading" :text="item.text">
+    <li class="area-item">
         <img :src="imgSrc"/>
 
         <div class="text-wrapper">
-            <h3>{{item.heading}}</h3>
-            <span>{{item.text}}</span>
+            <h3>{{item.title}}</h3>
+            <span>{{item.description}}</span>
         </div>
     </li>
 </template>
@@ -16,7 +16,7 @@
         mixins: [itemMixin],
         computed: {
             imgSrc() {
-                return require(`../../../public/images/icons/${this.item.img}.${this.item.imgFormat}`)
+                return require(`../../../public/images/icons/${this.item.img}.jpg`)
             }
         }
     }

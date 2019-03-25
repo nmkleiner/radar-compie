@@ -62,17 +62,17 @@ export default class SignupForm extends Form {
     }
 
     async submitSignup(signupData) {
-        console.log('signupData1',signupData)
-        const isValidForm = this.validate(signupData)
-        let successfulSignup = false
+        console.log('signupData1',signupData);
+        const isValidForm = this.validate(signupData);
+        let successfulSignup = false;
         if (isValidForm) {
-            const res = await userService.signup(signupData)
+            const res = await userService.signup(signupData);
             if (res.emailError) {
                 this.inputs.email.setErrorMsg()
             } else if (res.usernameError) {
                 this.inputs.username.setErrorMsg()
             } else {
-                console.log('res', res)
+                console.log('res', res);
                 successfulSignup = true
             }
         }
@@ -80,17 +80,14 @@ export default class SignupForm extends Form {
     }
 
     validate(signupData) {
-        console.log('signupData2',signupData)
-        let isValidForm = true
+        console.log('signupData2',signupData);
+        let isValidForm = true;
         if (!this.checkPasswords(signupData.password1, signupData.password2)) {
-            this.inputs.password1.setErrorMsg()
+            this.inputs.password1.setErrorMsg();
             isValidForm = false
         } else if (signupData.password1.length < 6) {
             isValidForm = false
         }
-        // else if () {
-        //
-        // }
         return isValidForm
     }
 

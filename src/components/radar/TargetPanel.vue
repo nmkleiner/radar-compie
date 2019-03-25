@@ -16,7 +16,7 @@
         </header>
 
         <main>
-            <PaddedInput
+            <FilterInput
                     type="text"
                     placeholder="Type or select filter"
                     left-icon="filter"
@@ -26,30 +26,22 @@
                 <template v-slot:right-icon>
                     <span class="input-right-symbol">x</span>
                 </template>
-            </PaddedInput>
+            </FilterInput>
             <ul>
-                <RightPanelListItem
-                        v-for="(target ,i) in targets"
-                        :key="i"
-                        :active="target.active"
-                        :color="target.color"
-                        :serialNum="target.serialNum"
-                        :heading="target.heading"
-                        :location="target.location"
-                />
+                <TargetItem v-for="(target ,i) in targets" :key="i" :target="target"/>
             </ul>
         </main>
     </div>
 </template>
 <script>
-    import PaddedInput from '../shared/FilterInput'
-    import RightPanelListItem from './TargetItem'
+    import FilterInput from '../shared/FilterInput'
+    import TargetItem from './TargetItem'
     import {mapActions, mapGetters} from 'vuex'
 
     export default {
         components: {
-            PaddedInput,
-            RightPanelListItem
+            FilterInput,
+            TargetItem
         },
         methods: {
             ...mapActions({

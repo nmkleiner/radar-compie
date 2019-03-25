@@ -7,14 +7,11 @@ const AreaSchema = new Schema({
         type:String,
         required: true
     },
-    imgFormat: {
-      type: String,
-    },
-    heading:{
+    title:{
         type: String,
         required: true
     },
-    text: {
+    description: {
         type: String,
         required: true
     }

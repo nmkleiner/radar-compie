@@ -2,7 +2,7 @@ import FormInput from "./FormInput";
 
 export default class Form {
     constructor(settings){
-        this.inputs = {}
+        this.inputs = {};
         this.buildInputs(settings.inputs);
     }
 

@@ -9,7 +9,7 @@ export default {
 
 async function login(loginData) {
     const {email,password} = loginData
-    const res = await axios.put(`${BASE_URL}users/login`, {email,password})
+    const res = await axios.post(`${BASE_URL}users/login`, {email,password})
     if (res.data.email) {
         sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
     }
@@ -24,7 +24,7 @@ async function isLoggedIn() {
 
 
 async function signup(signupData) {
-    const res = await axios.put(`${BASE_URL}users/signup`, signupData)
+    const res = await axios.post(`${BASE_URL}users/signup`, signupData)
     if (res.data.email) {
         sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
     }

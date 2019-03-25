@@ -13,7 +13,6 @@
                             :favorite="i === 0"
                             :item="item"
                             :key="i"
-                            :idx="i"
                     />
                 </transition-group>
             </ul>
@@ -47,11 +46,11 @@
             themeItem() {
                 switch (this.theme) {
                     case 'places':
-                        return 'PlaceItem'
+                        return 'PlaceItem';
                     case 'devices':
-                        return 'DeviceItem'
+                        return 'DeviceItem';
                     case 'areas':
-                        return 'AreaItem'
+                        return 'AreaItem';
                     default:
                         return ''
                 }

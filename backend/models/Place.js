@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const PlaceSchema = new Schema({
-    heading:{
+    title:{
         type: String,
         required: true
     },
-    text: {
+    description: {
         type: String,
         required: true
     }

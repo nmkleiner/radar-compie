@@ -8,7 +8,7 @@ export default {
     },
     getters: {
         items: (state) => state.items
-            .filter(item => item.heading.toLowerCase().includes(state.filter.toLowerCase()))
+            .filter(item => item.title.toLowerCase().includes(state.filter.toLowerCase()))
             .sort((item1, item2) => item2.active - item1.active)
 
     },

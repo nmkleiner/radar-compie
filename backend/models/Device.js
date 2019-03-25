@@ -7,15 +7,11 @@ const PlaceSchema = new Schema({
         type:String,
         required: true
     },
-    iconFormat: {
-      type: String,
-      // default
-    },
-    heading:{
+    title:{
         type: String,
         required: true
     },
-    text: {
+    description: {
         type: String,
         required: true
     }

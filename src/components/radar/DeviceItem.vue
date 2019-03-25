@@ -9,8 +9,8 @@
                 shape="circle"
         />
         <div class="text-wrapper">
-            <h3>{{item.heading}}</h3>
-            <span>{{item.text}}</span>
+            <h3>{{item.title}}</h3>
+            <span>{{item.description}}</span>
         </div>
     </li>
 </template>

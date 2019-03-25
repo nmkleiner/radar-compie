@@ -11,8 +11,8 @@
         />
         <div class="text-wrapper">
             <span v-if="favorite">Favorite</span>
-            <h3>{{item.heading}}</h3>
-            <span>{{item.text}}</span>
+            <h3>{{item.title}}</h3>
+            <span>{{item.description}}</span>
         </div>
     </li>
 </template>

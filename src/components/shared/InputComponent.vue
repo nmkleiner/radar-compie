@@ -5,10 +5,10 @@
 
         ></LineInput>
 
-        <PaddedInput
+        <FilterInput
                 v-else-if="shape === 'padded'"
 
-        ></PaddedInput>
+        ></FilterInput>
     </div>
 </template>
 

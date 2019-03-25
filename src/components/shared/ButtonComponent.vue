@@ -91,7 +91,10 @@
                 return require(`../../../public/images/icons/${this.notification}.svg`)
             },
             iconSrc() {
-                return require(`../../../public/images/icons/${this.img}.${this.imgFormat}`)
+                if (this.img === 'minus' || this.img === 'plus') {
+                    return require(`../../../public/images/icons/${this.img}.png`)
+                }
+                return require(`../../../public/images/icons/${this.img}.svg`)
             }
         },
     }
