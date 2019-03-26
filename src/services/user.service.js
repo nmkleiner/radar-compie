@@ -14,7 +14,7 @@ async function login(loginData) {
     try {
         const res = await axios.post(`${BASE_URL}users/login`, {email, password});
         if (res.data && res.data.user.email) {
-            sessionStorage.setItem(USER, JSON.stringify({email: res.data.user.email}));
+            localStorage.setItem(USER, JSON.stringify({email: res.data.user.email}));
             localStorage.setItem(TOKEN, JSON.stringify(res.data.token))
         }
         return res.data.user
@@ -29,8 +29,8 @@ async function login(loginData) {
 }
 
 
-async function isLoggedIn() {
-    const user = await JSON.parse(sessionStorage.getItem('radarUser'));
+function isLoggedIn() {
+    const user = JSON.parse(localStorage.getItem(USER));
     return !!user
 }
 
@@ -39,7 +39,7 @@ async function signup(signupData) {
     try {
         const res = await axios.post(`${BASE_URL}users/signup`, signupData);
         if (res.data.email) {
-            sessionStorage.setItem('radarUser', JSON.stringify({email: res.data.email}))
+            localStorage.setItem(USER, JSON.stringify({email: res.data.email}))
         }
         return res.data
     } catch (err) {

@@ -27,7 +27,6 @@ export default class LoginForm extends Form {
     async submitLogin(loginData) {
         const user = await userService.login(loginData)
         if (user.email) {
-        console.log('user: ',user)
             return user
         } else if (user.emailError) {
             this.inputs.email.setErrorMsg()

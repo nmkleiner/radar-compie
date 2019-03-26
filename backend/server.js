@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const jwt= require('./keys/JWT.middleware');
+
 
 
 
@@ -34,13 +36,13 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
-
 app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: false
-}))
+}));
 
+app.use(jwt.middleware);
 
 //Use routes
 app.use('/places', places);
@@ -53,4 +55,4 @@ app.use('/users', users);
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log('server started on port ', port)
-})
+});

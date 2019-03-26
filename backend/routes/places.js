@@ -4,7 +4,7 @@ const Place = mongoose.model('places');
 const router = express.Router();
 
 
-router.get('/', async (req,res) => {
+router.post('/', async (req,res) => {
     const places = await Place.find({});
     res.json(places)
 });

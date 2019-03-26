@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const jwtService = require('../keys/JWT.service')
+const jwtService = require('../keys/JWT.service');
 const User = mongoose.model('users');
 const router = express.Router();
 
@@ -15,13 +15,12 @@ router.post('/login', async (req, res) => {
             throw new Error('email')
         } else if (user.password !== password) {
             throw new Error('password')
+        } else {
+            const payload = {data: 'data'};
+            const options = {issuer: 'compie', subject: 'game of thrones', audience: user.email};
+            const token = await jwtService.sign(payload,options);
+            res.json({user, token})
         }
-        const token = await jwtService.sign({data: 'data'},{
-                issuer: 'compie',
-                subject: 'game of thrones',
-                audience: user.email
-            });
-        res.json({user: user, token: token})
 
     } catch (err) {
         return res.status(404).json({message: err.message})
